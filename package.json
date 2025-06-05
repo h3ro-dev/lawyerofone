@@ -6,9 +6,15 @@
     "orchestrate": "node scripts/agent-orchestrator.js",
     "background": "echo \"Background agent started with prompt:\" && echo $CURSOR_BACKGROUND_AGENT_PROMPT",
     "dev": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:all": "concurrently \"npm run dev:backend\" \"npm run dev\"",
     "build": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "build:all": "npm run build:backend && npm run build",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
     "test": "jest",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx"
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint:backend": "cd backend && npm run lint"
   },
   "keywords": [
     "lawyer",
@@ -16,5 +22,8 @@
     "one"
   ],
   "author": "Utlyze",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
 }
