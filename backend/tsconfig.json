@@ -25,6 +25,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
     "baseUrl": "./src",
     "paths": {
       "@/*": ["*"],
@@ -39,8 +40,4 @@
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "coverage", "**/*.test.ts", "**/*.spec.ts"]
-    "isolatedModules": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
 }

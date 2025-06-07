@@ -1,96 +1,62 @@
-import express, { Application, Request, Response, NextFunction } from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import morgan from 'morgan';
-import rateLimit from 'express-rate-limit';
+import express, { Express, Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
-import path from 'path';
+import helmet from 'helmet';
+import cors from 'cors';
 
-// Import routes
-import healthRouter from '../routes/health';
-import contactRouter from '../routes/contact';
-import legalCheckRouter from '../routes/legal-check';
-import contractRouter from '../routes/contract';
+dotenv.config();
 
-// Load environment variables
-dotenv.config({ path: path.join(__dirname, '../../../.env') });
+const app: Express = express();
 
-// Create Express app
-const app: Application = express();
-
-// Port configuration
-const PORT = process.env.PORT || 3001;
-const isDevelopment = process.env.NODE_ENV !== 'production';
-
-// Basic rate limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
-  message: 'Too many requests from this IP, please try again later.',
-});
-
+// ==================================
 // Middleware
-app.use(helmet()); // Security headers
+// ==================================
+app.use(helmet());
 app.use(cors({
-  origin: isDevelopment 
-    ? ['http://localhost:3000', 'http://localhost:3001'] 
-    : ['https://lawyerofone.ai', 'https://www.lawyerofone.ai'],
+  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
   credentials: true,
 }));
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-app.use(morgan(isDevelopment ? 'dev' : 'combined'));
-app.use('/api/', limiter);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Routes
-app.use('/api/health', healthRouter);
-app.use('/api/contact', contactRouter);
-app.use('/api/legal-check', legalCheckRouter);
-app.use('/api/contract', contractRouter);
+// ==================================
+// API Routes
+// ==================================
 
-// Root endpoint
-app.get('/', (req: Request, res: Response) => {
-  res.json({
-    message: 'Lawyer of One API',
-    version: '1.0.0',
-    endpoints: {
-      health: '/api/health',
-      contact: '/api/contact',
-      legalCheck: '/api/legal-check',
-      contract: '/api/contract',
-    },
-  });
+// Root
+app.get('/', (_req: Request, res: Response) => {
+  res.status(200).json({ status: 'ok', message: 'Lawyer of One API is running' });
 });
 
-// 404 handler
-app.use((req: Request, res: Response) => {
-  res.status(404).json({
-    error: 'Not Found',
-    message: `The requested resource ${req.url} was not found on this server.`,
-  });
+// Health
+app.get('/api/v1/health', (_req: Request, res: Response) => {
+  res.status(200).json({ status: 'ok' });
 });
 
-// Global error handler
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error('Error:', err);
-  
-  const status = (err as any).status || 500;
-  const message = isDevelopment ? err.message : 'Internal Server Error';
-  
-  res.status(status).json({
-    error: true,
-    message,
-    ...(isDevelopment && { stack: err.stack }),
-  });
+// Contact
+app.post('/api/v1/contact', (req: Request, res: Response) => {
+  const { name, email, message } = req.body;
+  if (!name || !email) {
+    return res.status(400).json({ error: 'Name and email are required.' });
+  }
+  console.log('Contact form submission:', { name, email, message });
+  return res.status(200).json({ success: true, message: 'Form submitted.' });
 });
 
-// Start server (only if not in Vercel environment)
-if (!process.env.VERCEL) {
+// ==================================
+// Error Handling
+// ==================================
+app.use((_err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  res.status(500).json({ error: 'Internal Server Error' });
+});
+
+// ==================================
+// Server Initialization
+// ==================================
+const PORT = process.env.PORT || 3001;
+if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
-    console.log(`🚀 Lawyer of One API running on port ${PORT}`);
-    console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`🚀 Server is running on port ${PORT}`);
   });
 }
 
-// Export for Vercel
 export default app;
