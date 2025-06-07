@@ -1,0 +1,253 @@
+// This is your Prisma schema file
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User authentication and profile
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  password        String
+  name            String?
+  role            UserRole  @default(CLIENT)
+  isActive        Boolean   @default(true)
+  emailVerified   Boolean   @default(false)
+  profileImage    String?
+  phoneNumber     String?
+  address         String?
+  city            String?
+  state           String?
+  zipCode         String?
+  country         String?
+  
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  lastLoginAt     DateTime?
+  
+  // Relations
+  cases           Case[]
+  documents       Document[]
+  conversations   Conversation[]
+  payments        Payment[]
+  notifications   Notification[]
+  
+  @@index([email])
+}
+
+enum UserRole {
+  CLIENT
+  ATTORNEY
+  ADMIN
+}
+
+// Legal cases
+model Case {
+  id              String       @id @default(cuid())
+  title           String
+  description     String?
+  caseNumber      String?      @unique
+  status          CaseStatus   @default(OPEN)
+  priority        Priority     @default(MEDIUM)
+  category        String
+  subcategory     String?
+  
+  // Dates
+  filingDate      DateTime?
+  dueDate         DateTime?
+  closedDate      DateTime?
+  
+  // Relations
+  userId          String
+  user            User         @relation(fields: [userId], references: [id])
+  documents       Document[]
+  conversations   Conversation[]
+  notes           CaseNote[]
+  
+  // Timestamps
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  
+  @@index([userId])
+  @@index([status])
+  @@index([caseNumber])
+}
+
+enum CaseStatus {
+  OPEN
+  IN_PROGRESS
+  PENDING_REVIEW
+  CLOSED
+  ARCHIVED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+// Documents related to cases
+model Document {
+  id              String       @id @default(cuid())
+  title           String
+  description     String?
+  fileUrl         String
+  fileType        String
+  fileSize        Int
+  mimeType        String
+  
+  // AI Analysis
+  aiSummary       String?
+  aiKeyPoints     Json?
+  aiRisks         Json?
+  aiRecommendations Json?
+  analyzedAt      DateTime?
+  
+  // Relations
+  userId          String
+  user            User         @relation(fields: [userId], references: [id])
+  caseId          String?
+  case            Case?        @relation(fields: [caseId], references: [id])
+  
+  // Timestamps
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  
+  @@index([userId])
+  @@index([caseId])
+}
+
+// AI Conversations
+model Conversation {
+  id              String       @id @default(cuid())
+  title           String?
+  
+  // Relations
+  userId          String
+  user            User         @relation(fields: [userId], references: [id])
+  caseId          String?
+  case            Case?        @relation(fields: [caseId], references: [id])
+  messages        Message[]
+  
+  // Timestamps
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  lastMessageAt   DateTime?
+  
+  @@index([userId])
+  @@index([caseId])
+}
+
+// Individual messages in conversations
+model Message {
+  id              String       @id @default(cuid())
+  content         String       @db.Text
+  role            MessageRole
+  
+  // AI specific fields
+  model           String?      // AI model used
+  tokens          Int?         // Token count
+  cost            Float?       // Cost in USD
+  
+  // Relations
+  conversationId  String
+  conversation    Conversation @relation(fields: [conversationId], references: [id])
+  
+  // Timestamps
+  createdAt       DateTime     @default(now())
+  
+  @@index([conversationId])
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+  SYSTEM
+}
+
+// Case notes
+model CaseNote {
+  id              String       @id @default(cuid())
+  content         String       @db.Text
+  isPrivate       Boolean      @default(false)
+  
+  // Relations
+  caseId          String
+  case            Case         @relation(fields: [caseId], references: [id])
+  
+  // Timestamps
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  
+  @@index([caseId])
+}
+
+// Payment records
+model Payment {
+  id              String       @id @default(cuid())
+  amount          Float
+  currency        String       @default("USD")
+  status          PaymentStatus @default(PENDING)
+  stripePaymentId String?      @unique
+  description     String?
+  
+  // Relations
+  userId          String
+  user            User         @relation(fields: [userId], references: [id])
+  
+  // Timestamps
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  paidAt          DateTime?
+  
+  @@index([userId])
+  @@index([status])
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+// Notifications
+model Notification {
+  id              String       @id @default(cuid())
+  title           String
+  message         String
+  type            NotificationType
+  isRead          Boolean      @default(false)
+  
+  // Relations
+  userId          String
+  user            User         @relation(fields: [userId], references: [id])
+  
+  // Timestamps
+  createdAt       DateTime     @default(now())
+  readAt          DateTime?
+  
+  @@index([userId])
+  @@index([isRead])
+}
+
+enum NotificationType {
+  INFO
+  SUCCESS
+  WARNING
+  ERROR
+  CASE_UPDATE
+  DOCUMENT_READY
+  PAYMENT_DUE
+  APPOINTMENT_REMINDER
+}

@@ -30,6 +30,14 @@
   ],
   "author": "Utlyze",
   "license": "MIT",
+  "dependencies": {
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.6",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}
+=======
   "devDependencies": {
     "concurrently": "^8.2.2",
     "prettier": "^3.1.0"
