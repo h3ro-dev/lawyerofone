@@ -11,19 +11,27 @@
     "build": "cd frontend && npm run build",
     "build:backend": "cd backend && npm run build",
     "build:all": "npm run build:backend && npm run build",
-    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "start": "cd frontend && npm start",
     "test": "jest",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
-    "lint:backend": "cd backend && npm run lint"
+    "lint:backend": "cd backend && npm run lint",
+    "lint:frontend": "cd frontend && npm run lint",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "install:frontend": "cd frontend && npm install",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
   },
   "keywords": [
     "lawyer",
     "of",
-    "one"
+    "one",
+    "legal",
+    "ai",
+    "assistant"
   ],
   "author": "Utlyze",
   "license": "MIT",
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "prettier": "^3.1.0"
   }
 }
