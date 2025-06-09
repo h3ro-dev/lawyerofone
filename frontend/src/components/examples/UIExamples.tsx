@@ -311,13 +311,6 @@ export const Skeleton: React.FC<{
           animation: 'shimmer 2s infinite',
         }}
       />
-      <style jsx>{`
-        @keyframes shimmer {
-          100% {
-            left: 100%;
-          }
-        }
-      `}</style>
     </div>
   );
 };
@@ -325,7 +318,7 @@ export const Skeleton: React.FC<{
 // Example showcase component
 export const UIExamplesShowcase: React.FC = () => {
   const [alertVisible, setAlertVisible] = React.useState(true);
-  const [progress, setProgress] = React.useState(75);
+  const [progress] = React.useState(75);
   
   return (
     <div style={{ padding: spacing[8], backgroundColor: colors.background.secondary }}>

@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import designSystem, { colors, spacing, typography, effects } from '../styles/design-system';
+import { colors, spacing, typography, effects } from '../styles/design-system';
 
 const StyleGuide: React.FC = () => {
   return (

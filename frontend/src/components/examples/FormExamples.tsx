@@ -8,48 +8,8 @@
 
 import React from 'react';
 import { colors, spacing, typography, effects, components } from '../../styles/design-system';
-
-// Example 1: Input component using design tokens
-export const Input: React.FC<{
-  type?: string;
-  placeholder?: string;
-  error?: boolean;
-  size?: 'sm' | 'md' | 'lg';
-}> = ({ type = 'text', error = false, size = 'md', ...props }) => {
-  const sizeStyles = components.input.sizes[size];
-  
-  return (
-    <input
-      type={type}
-      style={{
-        backgroundColor: components.input.default.bg,
-        color: components.input.default.text,
-        border: `1px solid ${error ? components.input.error.border : components.input.default.border}`,
-        padding: sizeStyles.padding,
-        fontSize: sizeStyles.fontSize,
-        height: sizeStyles.height,
-        borderRadius: effects.borderRadius.md,
-        width: '100%',
-        transition: effects.transition.all,
-        fontFamily: typography.fontFamily.sans,
-        outline: 'none',
-      }}
-      onFocus={(e) => {
-        if (!error) {
-          e.currentTarget.style.borderColor = components.input.focus.border;
-          e.currentTarget.style.boxShadow = `0 0 0 3px ${components.input.focus.ring}`;
-        }
-      }}
-      onBlur={(e) => {
-        if (!error) {
-          e.currentTarget.style.borderColor = components.input.default.border;
-          e.currentTarget.style.boxShadow = 'none';
-        }
-      }}
-      {...props}
-    />
-  );
-};
+import { Input } from '../ui/Input';
+import { Textarea } from '../ui/Textarea';
 
 // Example 2: Label component
 export const Label: React.FC<{
@@ -110,7 +70,7 @@ export const Select: React.FC<{
   options: { value: string; label: string }[];
   size?: 'sm' | 'md' | 'lg';
   error?: boolean;
-}> = ({ options, size = 'md', error = false, ...props }) => {
+} & React.SelectHTMLAttributes<HTMLSelectElement>> = ({ options, size = 'md', error = false, ...props }) => {
   const sizeStyles = components.input.sizes[size];
   
   return (
@@ -219,47 +179,6 @@ export const RadioGroup: React.FC<{
   );
 };
 
-// Example 7: Textarea component
-export const Textarea: React.FC<{
-  rows?: number;
-  error?: boolean;
-  placeholder?: string;
-}> = ({ rows = 4, error = false, ...props }) => {
-  
-  return (
-    <textarea
-      rows={rows}
-      style={{
-        backgroundColor: components.input.default.bg,
-        color: components.input.default.text,
-        border: `1px solid ${error ? components.input.error.border : components.input.default.border}`,
-        padding: `${spacing[2.5]} ${spacing[3.5]}`,
-        fontSize: typography.fontSize.base.size,
-        borderRadius: effects.borderRadius.md,
-        width: '100%',
-        transition: effects.transition.all,
-        fontFamily: typography.fontFamily.sans,
-        outline: 'none',
-        resize: 'vertical',
-        minHeight: '100px',
-      }}
-      onFocus={(e) => {
-        if (!error) {
-          e.currentTarget.style.borderColor = components.input.focus.border;
-          e.currentTarget.style.boxShadow = `0 0 0 3px ${components.input.focus.ring}`;
-        }
-      }}
-      onBlur={(e) => {
-        if (!error) {
-          e.currentTarget.style.borderColor = components.input.default.border;
-          e.currentTarget.style.boxShadow = 'none';
-        }
-      }}
-      {...props}
-    />
-  );
-};
-
 // Example form showcase
 export const FormExamplesShowcase: React.FC = () => {
   const [formData, setFormData] = React.useState({
@@ -292,7 +211,7 @@ export const FormExamplesShowcase: React.FC = () => {
             placeholder="Enter your name"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            error={!!errors.name}
+            error={errors.name}
           />
         </FormField>
         
@@ -304,7 +223,7 @@ export const FormExamplesShowcase: React.FC = () => {
             placeholder="Enter your email"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            error={!!errors.email}
+            error={errors.email}
           />
         </FormField>
         

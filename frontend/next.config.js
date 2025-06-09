@@ -15,11 +15,7 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
   },
   
-  // Internationalization
-  i18n: {
-    locales: ['en', 'es', 'fr'],
-    defaultLocale: 'en',
-  },
+  // Internationalization removed - not compatible with app directory
   
   // Environment variables
   env: {
@@ -97,7 +93,6 @@ const nextConfig = {
   
   // Experimental features
   experimental: {
-    serverActions: true,
     serverComponentsExternalPackages: ['@prisma/client', 'bcryptjs'],
   },
   

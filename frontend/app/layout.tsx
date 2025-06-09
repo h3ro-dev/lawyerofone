@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://lawyerofone.com'),
   title: "Lawyer of One - Your One-Person Legal Department",
   description: "AI-powered legal assistant with human attorney oversight for small businesses. Get contract reviews, compliance reminders, and plain-English legal explanations.",
   keywords: "legal assistant, small business lawyer, contract review, legal compliance, AI lawyer",
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
     url: "https://lawyerofone.com",
     siteName: "Lawyer of One",
     images: [{
-      url: "/og-image.png",
+      url: "/next.svg",
       width: 1200,
       height: 630,
       alt: "Lawyer of One - Your One-Person Legal Department"
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Lawyer of One - Your One-Person Legal Department",
     description: "AI-powered legal assistant with human attorney oversight for small businesses",
-    images: ["/og-image.png"]
+    images: ["/next.svg"]
   },
   robots: {
     index: true,
@@ -39,7 +40,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    apple: "/next.svg",
   },
 };
 

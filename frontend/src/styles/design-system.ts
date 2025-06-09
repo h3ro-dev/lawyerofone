@@ -10,16 +10,6 @@
 // ===========================
 
 /**
- * Base colors - the foundation of our color system
- */
-const baseColors = {
-  primary: '#4169E1',    // Utlyze Blue
-  accent: '#34495E',     // Dark Slate
-  white: '#FFFFFF',
-  black: '#000000',
-} as const;
-
-/**
  * Color palette with shades generated from base colors
  */
 export const colors = {
