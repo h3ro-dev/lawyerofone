@@ -10,7 +10,11 @@ import React from 'react';
 import { colors, spacing, typography, effects, components } from '../../styles/design-system';
 
 // Example 1: Button using direct design system tokens
-export const ButtonWithTokens: React.FC<{ variant?: 'primary' | 'secondary' | 'outline' | 'ghost' }> = ({ 
+export const ButtonWithTokens: React.FC<{ 
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  children?: React.ReactNode;
+  disabled?: boolean;
+}> = ({ 
   variant = 'primary',
   children,
   ...props 
@@ -78,6 +82,7 @@ export const ButtonWithClasses: React.FC<{
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   className?: string;
+  children?: React.ReactNode;
 }> = ({ variant = 'primary', size = 'md', className = '', children, ...props }) => {
   return (
     <button

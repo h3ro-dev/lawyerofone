@@ -18,7 +18,8 @@
     "lint:frontend": "cd frontend && npm run lint",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "install:frontend": "cd frontend && npm install",
-    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "taskmaster": "node task-master/task-master.js"
   },
   "keywords": [
     "lawyer",

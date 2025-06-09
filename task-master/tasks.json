@@ -1,0 +1,83 @@
+{
+  "project": {
+    "name": "Lawyer of One",
+    "domain": "lawyerofone.ai",
+    "targetAudience": "Small business owners without in-house legal counsel",
+    "primaryColor": "#4169E1",
+    "accentColor": "#34495E"
+  },
+  "tasks": {
+    "design-system": {
+      "name": "Create Design System",
+      "stream": "Design & Branding",
+      "dependencies": [],
+      "priority": "CRITICAL",
+      "estimatedHours": 3,
+      "prompt": "Create a comprehensive design system for 'Lawyer of One'. Use Utlyze blue (#4169E1) as the primary color and #34495E as the accent. The target audience is small business owners, so the design must be clean, professional, and trustworthy. Define tokens for colors, typography, spacing, and component styles.",
+      "completionCheck": {
+        "type": "fileExists",
+        "path": "frontend/src/styles/design-system.ts"
+      }
+    },
+    "content-strategy": {
+      "name": "Develop Content Strategy",
+      "stream": "Content Creation",
+      "dependencies": [],
+      "priority": "CRITICAL",
+      "estimatedHours": 4,
+      "prompt": "Create a detailed content strategy for 'Lawyer of One'. The primary target audience is small business owners without in-house legal counsel. Address their key pain points: legal anxieties, contract overload, fear of missing fine print, and high legal costs. The core solution is an AI-powered legal assistant with human attorney oversight. Focus content on contract review, plain-English explanations, and compliance reminders.",
+      "completionCheck": {
+        "type": "fileExists",
+        "path": "content/copy/homepage.md"
+      }
+    },
+    "nextjs-setup": {
+      "name": "Initialize Next.js Project",
+      "stream": "Frontend Development",
+      "dependencies": [],
+      "priority": "CRITICAL",
+      "estimatedHours": 2,
+      "prompt": "Initialize a new Next.js 14 project in the 'frontend' directory using TypeScript, Tailwind CSS, and the App Router. Follow the standard Utlyze setup procedures for a clean and scalable project structure.",
+      "completionCheck": {
+        "type": "fileExists",
+        "path": "frontend/package.json"
+      }
+    },
+    "component-library": {
+      "name": "Build Component Library",
+      "stream": "Frontend Development",
+      "dependencies": ["nextjs-setup", "design-system"],
+      "priority": "HIGH",
+      "estimatedHours": 4,
+      "prompt": "Using the approved design system, create a reusable React component library in 'frontend/src/components/ui'. Build a standard set of components including Button, Card, Input, Modal, and Container. Ensure all components are typed with TypeScript and are highly reusable.",
+      "completionCheck": {
+        "type": "fileExists",
+        "path": "frontend/src/components/ui/Button.tsx"
+      }
+    },
+    "landing-page": {
+      "name": "Build Landing Page",
+      "stream": "Frontend Development",
+      "dependencies": ["component-library", "content-strategy"],
+      "priority": "CRITICAL",
+      "estimatedHours": 4,
+      "prompt": "Build the main landing page for 'Lawyer of One' using the newly created component library and the finalized content. The page should include a hero section, address pain points, explain the solution, list features, show testimonials, and have multiple clear calls-to-action for consultation.",
+      "completionCheck": {
+        "type": "fileExists",
+        "path": "frontend/app/page.tsx"
+      }
+    },
+    "api-setup": {
+      "name": "Setup Backend API",
+      "stream": "Backend Development",
+      "dependencies": [],
+      "priority": "HIGH",
+      "estimatedHours": 3,
+      "prompt": "Set up the initial backend API infrastructure in the 'backend' directory. Use Express.js with TypeScript. Ensure the setup is ready for Vercel serverless function deployment. Include basic middleware for security and request handling.",
+      "completionCheck": {
+        "type": "fileExists",
+        "path": "backend/src/api/server.ts"
+      }
+    }
+  }
+} 

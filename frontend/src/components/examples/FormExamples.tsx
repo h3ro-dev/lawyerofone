@@ -271,7 +271,7 @@ export const FormExamplesShowcase: React.FC = () => {
     contactMethod: 'email',
   });
   
-  const [errors, setErrors] = React.useState<Record<string, string>>({});
+  const [errors] = React.useState<Record<string, string>>({});
   
   return (
     <div style={{ padding: spacing[8], backgroundColor: colors.background.primary, maxWidth: '600px' }}>
