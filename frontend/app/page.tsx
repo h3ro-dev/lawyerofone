@@ -14,25 +14,25 @@ export default function Home() {
       icon: "😰",
       title: "The 3 AM Legal Panic",
       subtitle: '"Did I miss something in that contract?"',
-      description: "You signed it last week. Now you're lying awake, wondering if you just agreed to something that could sink your business."
+      description: "You signed it last week. Now you&rsquo;re lying awake, wondering if you just agreed to something that could sink your business."
     },
     {
       icon: "📄",
       title: "The Contract Mountain",
       subtitle: '"Another contract. Great."',
-      description: "Vendor agreements. Client contracts. NDAs. They all land on YOUR desk because you don't have a legal team."
+      description: "Vendor agreements. Client contracts. NDAs. They all land on YOUR desk because you don&rsquo;t have a legal team."
     },
     {
       icon: "🔍",
       title: "The Fine Print Fear",
       subtitle: '"What am I not seeing?"',
-      description: "You know it's there – that one clause that could cost you everything. But you're not a lawyer."
+      description: "You know it&rsquo;s there – that one clause that could cost you everything. But you&rsquo;re not a lawyer."
     },
     {
       icon: "💸",
       title: "The $500/Hour Reality Check",
       subtitle: '"I just need a quick answer..."',
-      description: "But there's no such thing as a 'quick' legal question when lawyers bill by the hour."
+      description: "But there&rsquo;s no such thing as a &lsquo;quick&rsquo; legal question when lawyers bill by the hour."
     }
   ];
 
@@ -81,7 +81,7 @@ export default function Home() {
       role: "E-commerce Founder"
     },
     {
-      quote: "The plain-English explanations are a game-changer. I finally understand what I'm signing without needing a law degree.",
+      quote: "The plain-English explanations are a game-changer. I finally understand what I&rsquo;m signing without needing a law degree.",
       author: "Rita Patel",
       role: "Freelance Designer"
     }
@@ -109,7 +109,7 @@ export default function Home() {
     },
     {
       question: "What makes this different from other legal AI tools?",
-      answer: "Two things: attorney oversight on every analysis, and AI trained specifically on small business needs. We don't just spot issues – we explain why they matter to YOU."
+      answer: "Two things: attorney oversight on every analysis, and AI trained specifically on small business needs. We don&rsquo;t just spot issues – we explain why they matter to YOU."
     }
   ];
 
@@ -121,16 +121,16 @@ export default function Home() {
   };
 
   return (
-    <>
+    <div className="w-full overflow-visible">
       <Header onGetStarted={() => setIsContactModalOpen(true)} />
       <ContactModal 
         isOpen={isContactModalOpen} 
         onClose={() => setIsContactModalOpen(false)} 
       />
       
-      <main className="min-h-screen">
+      <main className="w-full overflow-visible" style={{ minHeight: 'auto' }}>
         {/* Hero Section */}
-        <section className="pt-32 pb-20 bg-gradient-to-b from-blue-50 to-white">
+        <section data-section="hero" className="pt-32 pb-20 bg-gradient-to-b from-blue-50 to-white">
           <Container>
             <div className="text-center max-w-4xl mx-auto">
               <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
@@ -163,7 +163,7 @@ export default function Home() {
         </section>
 
         {/* Pain Points Section */}
-        <section className="py-20 bg-white">
+        <section data-section="pain-points" className="py-20 bg-white">
           <Container>
             <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
               Sound Familiar?
@@ -184,7 +184,7 @@ export default function Home() {
         </section>
 
         {/* Solution Section */}
-        <section className="py-20 bg-gray-50">
+        <section data-section="solution" className="py-20 bg-gray-50">
           <Container>
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
@@ -233,7 +233,7 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section className="py-20 bg-white">
+        <section data-section="features" className="py-20 bg-white">
           <Container>
             <div className="grid lg:grid-cols-3 gap-12">
               {features.map((feature, index) => (
@@ -255,7 +255,7 @@ export default function Home() {
         </section>
 
         {/* Social Proof Section */}
-        <section className="py-20 bg-gray-50">
+        <section data-section="social-proof" className="py-20 bg-gray-50">
           <Container>
             <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
               Join 5,000+ Small Business Owners Sleeping Better
@@ -266,7 +266,7 @@ export default function Home() {
               {testimonials.map((testimonial, index) => (
                 <Card key={index} variant="elevated">
                   <CardContent className="p-8">
-                    <p className="text-lg mb-6 italic">"{testimonial.quote}"</p>
+                    <p className="text-lg mb-6 italic">&ldquo;{testimonial.quote}&rdquo;</p>
                     <div>
                       <p className="font-semibold">{testimonial.author}</p>
                       <p className="text-gray-600">{testimonial.role}</p>
@@ -289,7 +289,7 @@ export default function Home() {
         </section>
 
         {/* Risk Reversal Section */}
-        <section className="py-20 bg-[#4169E1] text-white">
+        <section data-section="risk-reversal" className="py-20 bg-[#4169E1] text-white">
           <Container>
             <div className="text-center max-w-3xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
@@ -325,7 +325,7 @@ export default function Home() {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-20 bg-white">
+        <section data-section="faq" className="py-20 bg-white">
           <Container size="md">
             <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
               Frequently Asked Questions
@@ -344,14 +344,14 @@ export default function Home() {
         </section>
 
         {/* Final CTA Section */}
-        <section className="py-20 bg-gradient-to-b from-white to-blue-50">
+        <section data-section="final-cta" className="py-20 bg-gradient-to-b from-white to-blue-50">
           <Container>
             <div className="text-center max-w-3xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
                 Stop Guessing. Start Protecting Your Business.
               </h2>
               <p className="text-xl text-gray-600 mb-8">
-                Join thousands of small business owners who've taken control of their legal risks. 
+                Join thousands of small business owners who&rsquo;ve taken control of their legal risks. 
                 Your free legal health check takes just 5 minutes.
               </p>
               
@@ -392,7 +392,7 @@ export default function Home() {
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="mb-4 md:mb-0">
                 <h3 className="text-2xl font-bold">Lawyer of One</h3>
-                <p className="text-gray-400">Part of the Utlyze "Of One" suite</p>
+                <p className="text-gray-400">Part of the Utlyze &ldquo;Of One&rdquo; suite</p>
               </div>
               <div className="flex space-x-6">
                 <a href="#" className="hover:text-gray-300">Privacy Policy</a>
@@ -406,6 +406,6 @@ export default function Home() {
           </Container>
         </footer>
       </main>
-    </>
+    </div>
   );
 }
