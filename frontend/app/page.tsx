@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Header from "./components/Header";
 import ContactModal from "./components/ContactModal";
-import { Button, Card, CardContent, Container, Input } from "../src/components/ui";
+import { Button, Card, CardContent, Container, Input } from "@/components/ui";
 
 export default function Home() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
