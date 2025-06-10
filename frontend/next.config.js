@@ -93,7 +93,7 @@ const nextConfig = {
   
   // Experimental features
   experimental: {
-    serverComponentsExternalPackages: ['@prisma/client', 'bcryptjs'],
+    // serverComponentsExternalPackages: ['@prisma/client', 'bcryptjs'],
   },
   
   // Output configuration
