@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { notifyLead, utmFromLocation } from "../lib/notifyLead";
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -36,6 +37,14 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
       if (response.ok) {
         setSubmitMessage(data.message);
         setFormData({ name: "", email: "", company: "", message: "" });
+        // Fire-and-forget Slack notifier
+        try {
+          const page_url = typeof window !== 'undefined' ? window.location.href : '';
+          const payload = { ...formData, page_url, ...utmFromLocation() };
+          notifyLead('contact', payload);
+        } catch (e) {
+          console.warn('notifyLead skipped', e);
+        }
         setTimeout(() => {
           onClose();
           setSubmitMessage("");
